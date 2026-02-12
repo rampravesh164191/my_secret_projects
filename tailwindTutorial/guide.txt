@@ -1,0 +1,84 @@
+utility classes - Tailwind UI, Headless UI -> use premade designs {but tweaking them is difficult}
+Sailboat UI, daisy UI, ShadCN , TailBlocks, Tailwind UI, Headless UI
+microsoft, netflix, github, Nasa etc uses tailwind UI
+
+How does tailwind css work?
+css  {custom css}
+selector {
+    properties1
+    properties2
+}
+
+tailwind {utility first mindset}
+bg-white, px-2, flex, rounded
+
+> saves hours of time
+ myth : aren't those just inline styles?
+ ans : no, inline style doesn't allow to use pesudo classes and media queries
+
+//tailwind play a website to test with tailwind css
+
+npm create vite@latest tailwind1 -- --template react
+
+tailwind runs on JIT(just in-time compiler) compiler
+
+//flex box froggy
+//css dinner
+//grid garden
+
+tailwind is mobile first - responsiveness : min-width
+
+1 :Warning : theme colors, don't write is manually
+---directives to make life easy
+@import, @theme, @source, @utility, @variant
+@reference, @apply, @custom-varient
+
+---CSS
+--- @theme directive
+@theme {
+    --color-chestnut: #973f29
+}
+
+--jsx
+className="text-chestnut"
+
+2 : Warning : button with lots of css can look messy
+what to do? 
+a) either make it a component  
+b) use directives (base, components, utilities) : these are parts of an approach structuring and organising a style using a configurating file method
+    base: applies styles globally
+    @layer base{
+        h1:{
+            color:green;
+        }
+    }
+    components : applies styles on components
+    @layer components {
+        .card {
+            background-color : red;
+            border-radius : 3px
+        }
+    }
+
+    utilities: atomic styles for individual property : margin, padding etc
+    @utility flex-center{
+        @apply flex justify-center items-center
+    }
+    @apply : inserts tailwind css into css
+    @layer base{
+        h3{
+            @apply font-medium text-slate-900
+        }
+    }
+    @layer :
+    @layer components{
+        .card{
+            @apply m-10 rounded-lg bg-white
+        }
+    }
+
+
+//want predefiend UI components 
+//you can apply tailwind properties here as well
+//it is build on top of tailwind
+ShadCN - buttons, components 

@@ -1,0 +1,2 @@
+All extra projects should be here
+1. Tailwind tutorial - 12-Feb-2026
