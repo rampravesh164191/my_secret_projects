@@ -82,3 +82,70 @@ b) use directives (base, components, utilities) : these are parts of an approach
 //you can apply tailwind properties here as well
 //it is build on top of tailwind
 ShadCN - buttons, components 
+
+----------------------error1 : -------------------------
+@utility bb{
+  @apply border border-black
+}
+
+@utility is marked underline as indication of error saying Unknown at rule utility
+    The reason it’s underlined:
+
+@utility is not a standard CSS at-rule
+
+VS Code / CSS language server only understands standard rules like:
+
+@media
+
+@import
+
+@keyframes
+
+So the editor thinks:
+
+❌ "Unknown at rule @utility"
+
+But…
+
+✅ Why It Still Works?
+
+Because Tailwind CSS processes it during build time using PostCSS.
+
+Tailwind understands @utility, even though vanilla CSS doesn’t.
+
+So:
+
+❌ Editor doesn’t recognize it
+
+✅ Tailwind compiler does
+
+🛠 How to Fix the Red Underline (Recommended Solutions)
+✅ Solution 1: Install Tailwind CSS IntelliSense (Best Fix)
+
+Install VS Code extension:
+
+🔌 Tailwind CSS IntelliSense
+
+This reduces false errors and improves autocomplete.
+
+my conclusing : just ignore it.
+-------------------------------------------------------
+
+//my tested well worked responsiveness it works form 
+//small to big screen
+//initially w-full just taking the whole screen width
+//and bigger then small screen color is yellow
+//width is still full
+//and for bigger then larger screen (1/s laptop screen size)
+//max width is set to 1536px 
+//very clever approach
+
+*****************************************
+<div 
+className="bb h-screen w-full bg-red-500
+ sm:bg-yellow-500 
+ lg:max-w-[1536px] lg:mx-auto lg:bg-green-500">
+      hello
+</div>
+*********************************************
+
