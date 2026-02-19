@@ -10,12 +10,10 @@
 </body>
 </html>
 <script>
-function greet(){
-    let name = "Ashutosh";
-    return function (){
-        console.log("Hello", name);
-    }
-}
-let sayHello = greet();
-sayHello();
+const numbers = [1,2, 3, 4];
+const doubled = numbers.forEach((num)=>{
+    console.log(num*2)
+    return num * 2;
+})
+console.log(doubled)
 </script>

@@ -129,18 +129,20 @@
 
 ## 19 Feb 2026
 ### Tasks 
+### Rule : One step at a Time.
 > **Urgent and Important (deadline, brain crisis mode)**
-- [ ] Send kids to School 
+- [x] Send kids to School 
+- [x] Buy milk from shop
 - [ ] Take back kids
-- [ ] Basic morning routine (wake up, brush, drink water)
+- [x] Basic morning routine (wake up, brush, drink water)
 - [ ] DSA (1hr) atleast
-- [ ] Javascript (1hr) atleast
-- [ ] Frontend (1hr) atleast
+- [x] Javascript (1hr) atleast
+- [x] Frontend (1hr) atleast
 - [ ] Backend (1hr) atleast
 - [ ] MongoDB (1hr) atleast
 - [ ] Exercise (40min)
 - [ ] Gyatri Mantra (10min go for walk)
-- [ ] planning day (10 min)
+- [x] planning day (10 min)
 - [ ] reflecting day at night (20min)
 > **Not Urgent but Important**
 - [ ] DSA extra practice
@@ -153,8 +155,18 @@
 - [ ] Random Interruptions
 - [ ] Unplanned Calls
 - [ ] Small Distractions
-> **Not urgent Not Important**
+> **Not urgent Not Important yesterday (10 hour spent)**
 - [ ] Endless scrolling
 - [ ] gaming excessively
 - [ ] watching series
 - [ ] procrastinating
+
+### plan to execute those tasks 
+- 6:30am - 7:00am - get ready
+- 7:15am - buy milk
+- 7:00am - 8:00am - read my previous year diary
+- 8:00am - 9:00am - planning
+- 9:00am - 9:30am - breakfast
+- 9:30am - 11:45 - 120/135 minutes
+
+
