@@ -62,19 +62,19 @@
        <div>14</div>
        <div>react revision</div>
     </td>
-    <td>
+    <td style="background-color: lightgreen">
        <div>15</div>
-       <div>Task</div>
+       <div>react revison</div>
     </td>
   </tr>
   <tr>
-    <td>
+    <td style="background-color: lightgreen">
        <div>16</div>
-       <div>Task</div>
+       <div>Learning Japanese</div>
     </td>
-    <td>
+    <td style="background-color: lightgreen">
        <div>17</div>
-       <div>Task</div>
+       <div>japanese</div>
     </td>
     <td>
        <div>18</div>
@@ -126,3 +126,35 @@
     </td>
   </tr>
 </table>
+
+## 19 Feb 2026
+### Tasks 
+> **Urgent and Important (deadline, brain crisis mode)**
+- [ ] Send kids to School 
+- [ ] Take back kids
+- [ ] Basic morning routine (wake up, brush, drink water)
+- [ ] DSA (1hr) atleast
+- [ ] Javascript (1hr) atleast
+- [ ] Frontend (1hr) atleast
+- [ ] Backend (1hr) atleast
+- [ ] MongoDB (1hr) atleast
+- [ ] Exercise (40min)
+- [ ] Gyatri Mantra (10min go for walk)
+- [ ] planning day (10 min)
+- [ ] reflecting day at night (20min)
+> **Not Urgent but Important**
+- [ ] DSA extra practice
+- [ ] Coding extra practice
+- [ ] Japanese extra practice
+- [ ] UPSC extra practice
+- [ ] push code to GitHub
+
+> **Urgent but Not Important**
+- [ ] Random Interruptions
+- [ ] Unplanned Calls
+- [ ] Small Distractions
+> **Not urgent Not Important**
+- [ ] Endless scrolling
+- [ ] gaming excessively
+- [ ] watching series
+- [ ] procrastinating
