@@ -241,6 +241,7 @@
 > 
 > after breakfast felt tired, after sleep got headache
 > couldn't focus (was the schedule complex?)
+> did I ate too much in breakfast?
 
 ## 21 Feb 2026
 ### Tasks 
@@ -249,15 +250,15 @@
 > **Urgent and Important (deadline, brain crisis mode)**
 - [x] Send kids to School 
 - [x] Buy milk from shop
-- [ ] Take back kids
+- [x] Take back kids
 - [x] Basic morning routine (wake up, brush, drink water)
 - [ ] DSA (3hr) atleast
 - [ ] Javascript (1hr) atleast
 - [ ] Frontend (1hr) atleast (for 22 feb)
 - [ ] Backend (3hr) atleast
 - [ ] MongoDB (1hr) atleast
-- [ ] Exercise (1 hour)
-- [ ] planning day (30 min)
+- [x] Exercise (1 hour)
+- [x] planning day (30 min)
 
 > **Not Urgent but Important**
 - [ ] reflecting day at night (20min)
@@ -268,7 +269,7 @@
 - [ ] push code to GitHub
 
 > **Urgent but Not Important**
-- [ ] Random Interruptions
+- [x] Random Interruptions (brother forgot charger)
 - [ ] Unplanned Calls
 - [ ] Small Distractions
 > **Not urgent Not Important yesterday (10 hour spent)**
@@ -297,3 +298,7 @@ want to watch reels, series, entertainment??
 ```
 - 9:00am - 9:38am : read book
 - 9:38am - 11:14am : DSA (distracted by bro)
+- 11:14am - 11:45am : backend (30 min)
+- 11:45am - 1:00pm : brother forgot charger at home
+- 1:00pm - 2:00pm : exercise
+- 2:00pm - 3:00pm : sleep
