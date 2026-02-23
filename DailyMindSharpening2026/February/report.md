@@ -252,19 +252,19 @@
 - [x] Buy milk from shop
 - [x] Take back kids
 - [x] Basic morning routine (wake up, brush, drink water)
-- [ ] DSA (3hr) atleast
+- [x] DSA (3hr) atleast
 - [ ] Javascript (1hr) atleast
 - [ ] Frontend (1hr) atleast (for 22 feb)
-- [ ] Backend (3hr) atleast
+- [x] Backend (3hr) atleast
 - [ ] MongoDB (1hr) atleast
 - [x] Exercise (1 hour)
 - [x] planning day (30 min)
 
 > **Not Urgent but Important**
 - [ ] reflecting day at night (20min)
-- [ ] Gyatri Mantra (10min go for walk)
+- [x] Gyatri Mantra (10min go for walk)
 - [ ] Coding extra practice
-- [ ] Japanese 
+- [x] Japanese 
 - [ ] UPSC extra practice
 - [ ] push code to GitHub
 
@@ -273,7 +273,7 @@
 - [ ] Unplanned Calls
 - [ ] Small Distractions
 > **Not urgent Not Important yesterday (10 hour spent)**
-- [ ] Endless scrolling
+- [x] Endless scrolling
 - [ ] gaming excessively
 - [ ] watching series
 - [ ] procrastinating
@@ -302,3 +302,72 @@ want to watch reels, series, entertainment??
 - 11:45am - 1:00pm : brother forgot charger at home
 - 1:00pm - 2:00pm : exercise
 - 2:00pm - 3:00pm : sleep
+- 3:00pm - 6:00pm : backend
+- 6:00pm - 7:00pm : walk + gyatri mantra
+- 7:00pm - 10:00pm : party
+- 10:00pm - 12:00am : japanese (brain exhaust)
+- 12:00am - 7:00am : sleep
+
+
+
+## 22 Feb 2026
+### Tasks 
+### Rule : One step at a Time. (Maintain Discipline)
+### Goal : Job + freelancing
+> **Urgent and Important (deadline, brain crisis mode)**
+- [ ] Send kids to School (sunday)
+- [x] Buy milk from shop
+- [ ] Take back kids (sunday)
+- [x] Basic morning routine (wake up, brush, drink water)
+- [ ] DSA (3hr) atleast
+- [ ] Javascript (1hr) atleast
+- [ ] Frontend (1hr) atleast (for 22 feb)
+- [ ] Backend (3hr) atleast
+- [ ] MongoDB (1hr) atleast
+- [ ] Exercise (1 hour)
+- [ ] planning day (30 min)
+
+> **Not Urgent but Important**
+- [ ] reflecting day at night (20min)
+- [ ] Gyatri Mantra (10min go for walk)
+- [ ] Coding extra practice
+- [ ] Japanese 
+- [ ] UPSC extra practice
+- [ ] push code to GitHub
+
+> **Urgent but Not Important**
+- [ ] Random Interruptions (brother forgot charger)
+- [ ] Unplanned Calls
+- [ ] Small Distractions
+> **Not urgent Not Important yesterday (10 hour spent)**
+- [ ] Endless scrolling
+- [ ] gaming excessively
+- [ ] watching series
+- [ ] procrastinating
+
+### plan to execute those tasks
+> Set 1: 10:00am - 1:00pm (3hr) DSA
+> Set 2: 3:00pm - 6:00pm (3hr) Frontend + backend revision
+> set 3: 7:00pm - 10:00pm (3hr) something i like - japanese, UPSC [kind of reward]
+
+
+> 7:00am - 9:30am (2hr 30min) ready, plan
+> 9:30am - 10:00am (30min) book reading
+> 1:00pm - 3:00pm (2hr) exercise -> bath
+> 6:00pm - 7:00pm - go for walk (gyatri mantra)
+> 10:00pm - 11:00pm - Dinner
+> 11:00pm - 11:30pm (day conclusion)
+> 11:30pm - 1:00am (doulingo):make brain exhaust
+
+```text
+want to watch reels, series, entertainment??
+-> do 100 pullups
+```
+- 7:00am - 9:00am - ready, water tap repair, daily chores
+- 9:00am - 9:30am - plan
+- 9:30am - 10:00am - read book
+- watched tarak Mehta series entire day (cue triggered)
+
+
+
+

@@ -1,2 +1,48 @@
 All extra projects should be here
 1. Tailwind tutorial - 12-Feb-2026
+
+
+//wrong way tailwind (don't give percentage it breaks responsiveness)
+export default function Navbar(){
+    return (
+        <div className="flex justify-between items-center h-[60px] px-3">
+            <div className="bb px-2 py-1">RM</div>
+            <div className="flex bb w-[25%] justify-between">
+                <p className="bb px-2">Contact</p>
+                <p className="bb px-2">About Me</p>
+                <p className="bb px-2">Project</p>
+            </div>
+            <div className=" flex justify-between bb w-[10%]">
+                <button className="bb px-2">SignUp</button>
+                <button className="bb px-2">Login</button>
+            </div>
+        </div>
+    )
+}
+
+//right way tailwind
+export default function Navbar(){
+    return (
+        <div className="flex justify-between items-center h-[60px] px-6 border-b">
+            
+            {/* Logo */}
+            <div className="text-xl font-bold">
+                RM
+            </div>
+
+            {/* Links */}
+            <div className="hidden md:flex gap-8">
+                <p className="cursor-pointer hover:text-blue-500">Contact</p>
+                <p className="cursor-pointer hover:text-blue-500">About Me</p>
+                <p className="cursor-pointer hover:text-blue-500">Project</p>
+            </div>
+
+            {/* Buttons */}
+            <div className="hidden md:flex gap-4">
+                <button className="px-4 py-1 border rounded">SignUp</button>
+                <button className="px-4 py-1 bg-black text-white rounded">Login</button>
+            </div>
+
+        </div>
+    )
+}
