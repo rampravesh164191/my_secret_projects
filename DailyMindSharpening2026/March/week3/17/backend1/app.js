@@ -1,6 +1,8 @@
 const express = require("express");
 const connectToDB = require("./configs/db.config");
 const doctorRouter = require("./routers/doctor.router");
+const patientRouter = require("./routers/patient.router");
+const consultationRouter = require("./routers/consultation.router");
 const app = express();
 const port = 3000;
 
@@ -12,6 +14,12 @@ app.get("/test",(req, res)=>{
 
 //handle doctor router
 app.use("/doctor",doctorRouter);
+
+//handle patient router
+app.use("/patient", patientRouter);
+
+//handle consultation router
+app.use("/consultation", consultationRouter);
 
 //handle wrong routes
 app.use((req, res)=>{
