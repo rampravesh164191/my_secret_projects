@@ -30,4 +30,18 @@ const addConsultation = async (req, res) =>{
     }
 }
 
-module.exports = {addConsultation, getConsultations};
+//get all the patients consulted by a doctor
+const getAllPatientsConsultedByDoctor = async (req, res) =>{
+    try{
+        const {doctorId} = req.params;
+        const doctor = await DoctorModel.findById(doctorId);
+        if(!doctor) {return res.status(404).send("doctor not found");}
+
+        const consultations = await ConsultationModel.find({doctorId : doctorId}).populate("patientId")
+        res.status(200).json({message : "list of all consultations", consultations})
+    }catch(error){
+        res.status(500).json({message : "failed fetching all patients consulted by a doctor", error : error.message})
+    }
+}
+
+module.exports = {addConsultation, getConsultations, getAllPatientsConsultedByDoctor};
