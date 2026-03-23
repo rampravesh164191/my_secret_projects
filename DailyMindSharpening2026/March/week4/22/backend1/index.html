@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+
+
+
+function findNeedle(haystack, needle) {
+    let p1 = 0;
+    let bag = "";
+    
+    for(let i = 0; i < haystack.length; i++){
+        let ch = haystack[i];
+        if(ch == needle[p1]){
+            bag += ch;
+            p1++;
+        }else{
+            bag="";
+            p1=0;
+        }
+        console.log(ch, bag, i, bag.length-1, ": ", i-(bag.length-1))
+        if(bag == needle){
+            return i-bag.length-1;
+        }
+    }
+    return -1
+};
+
+console.log(findNeedle("sadbutsad","sad"))
+console.log(findNeedle("mississippi","issip"))
+
+</script>
