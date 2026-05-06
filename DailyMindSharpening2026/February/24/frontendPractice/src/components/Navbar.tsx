@@ -1,4 +1,25 @@
-import { useState } from "react"
+import { useState } from "react";
+import {Link} from "react-router-dom";
+
+function Navbar(){
+    return (
+        <div className="border h-[60px] flex items-center justify-between px-4">
+            <div>RP</div>
+            <div className="hidden gap-4 sm:flex">
+                <Link to="/about" className="hover:text-green-500 hover:cursor-pointer px-3 rounded-lg">About</Link>
+                <Link to="/projects" className="hover:text-green-500 hover:cursor-pointer px-3 rounded-lg">Projects</Link>
+                <Link to="/contact" className="hover:text-green-500 hover:cursor-pointer px-3 rounded-lg">Contact</Link>
+            </div>
+            <div className="flex gap-4">
+                <button className="border px-3 py-1 rounded-lg hover:cursor-pointer">Signup</button>
+                <button className="border px-3 py-1 rounded-lg hover:cursor-pointer bg-black text-yellow-500">Login</button>
+            </div>
+        </div>
+    )
+}
+export default Navbar;
+
+/*import { useState } from "react"
 import About from "./About"
 import {Link} from "react-router-dom"
 import Projects from "./Projects"
@@ -21,3 +42,4 @@ export default function Navbar(){
         </div>
     )
 }
+*/

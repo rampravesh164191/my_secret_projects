@@ -1,33 +1,21 @@
-import {Menu, X} from "lucide-react"
-import { useState } from "react"
-export default function Navbar(){
-    const [toggleMenu, setToggleMenu] = useState(false);
+function Navbar(){
     return (
-        <div className="border w-full h-[60px] flex justify-between items-center bg-white px-4 relative">
-            <div>Navbar</div>
-            <div className="gap-3 hidden sm:flex">
-                <h3 className="hover:text-blue-500 cursor-pointer">Home</h3>
-                <h3 className="hover:text-blue-500 cursor-pointer">About</h3>
-                <h3 className="hover:text-blue-500 cursor-pointer">Projects</h3>
-                <h3 className="hover:text-blue-500 cursor-pointer">Contact</h3>
+        <div className="border h-[60px] flex items-center justify-between px-2">
+            <div>Orange</div>
+            <div className="flex gap-3">
+                <select name="" id="" className="border absolute left-[50vw]">
+                        <option value="store">Store</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="vegetables">Vegetables</option>
+                        <option value="fruits">Fruits</option>
+                </select>
+                <p>Cart</p>
             </div>
-            <div className="gap-3 hidden sm:flex">
-                <button className="border px-5 py-1 rounded-sm bg-blue-500 text-white hover:bg-blue-700 cursor-pointer" >Login</button>
-                <button className="border px-5 py-1 rounded-sm hover:cursor-pointer">SignUp</button>
+            <div className="flex gap-3">
+                <button className="border px-3 py-1 rounded-lg bg-green-400 text-white hover:bg-green-500 cursor-pointer">Signup</button>
+                <button className="border px-3 py-1 rounded-lg bg-blue-400 text-white hover:bg-blue-500 cursor-pointer">Login</button>
             </div>
-            {toggleMenu == true? 
-            <X className="sm:hidden cursor-pointer" onClick={()=>setToggleMenu(false)} /> : 
-            <Menu className="sm:hidden cursor-pointer" onClick={()=>setToggleMenu(true)} />}
-            {toggleMenu && (
-                <div className="absolute right-0 w-[200px] top-[60px] bg-white flex flex-col items-center gap-4 py-4 sm:hidden rounded-bl-lg">
-                <h3 className="hover:text-blue-500 cursor-pointer">Home</h3>
-                <h3 className="hover:text-blue-500 cursor-pointer">About</h3>
-                <h3 className="hover:text-blue-500 cursor-pointer">Projects</h3>
-                <h3 className="hover:text-blue-500 cursor-pointer">Contact</h3>
-                <h3 className="hover:text-blue-500 cursor-pointer">Login</h3>
-                <h3 className="hover:text-blue-500 cursor-pointer">Signup</h3>
-            </div>
-            )}
         </div>
     )
 }
+export default Navbar;
