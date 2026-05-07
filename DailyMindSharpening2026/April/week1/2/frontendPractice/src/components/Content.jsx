@@ -12,6 +12,16 @@ import q1 from "../assets/pics/q1.webp"
 import q2 from "../assets/pics/q2.webp"
 import q3 from "../assets/pics/q3.webp"
 import q4 from "../assets/pics/q4.webp"
+import {BadgeCheck, ChevronRight} from "lucide-react"
+import z1 from "../assets/pics/z1.webp"
+import z2 from "../assets/pics/z2.webp"
+import z3 from "../assets/pics/z3.webp"
+import z4 from "../assets/pics/z4.webp"
+import z5 from "../assets/pics/z5.webp"
+import z6 from "../assets/pics/z6.webp"
+import z7 from "../assets/pics/z7.webp"
+import z8 from "../assets/pics/z8.webp"
+
 
 
 function Content(){
@@ -86,7 +96,43 @@ function Content(){
                     </div>
                 </div>
             </div>
-
+            {/* --------------------------------next section--------------- */}
+            <div className="border h-[100px] flex items-center justify-between px-3">
+                <div className="flex text-[35px] items-center">
+                    <h2 className="text-gray-900">Original Brands</h2>
+                    <BadgeCheck className="size-[40px] ml-3 text-blue-800" />
+                </div>
+                <div className="flex text-[20px] items-center cursor-pointer">
+                    <h2 className="text-blue-500">View All</h2>
+                    <ChevronRight className="size-[20px] ml-3 text-blue-800"  />
+                </div>
+            </div>
+            <div className="border flex overflow-x-scroll items-center gap-2 py-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+               <div className="w-[250px] flex-shrink-0 flex justify-center">
+                 <img src={z1} alt="" />
+               </div>
+               <div className="w-[250px] flex-shrink-0 flex justify-center">
+                 <img src={z2} alt="" />
+               </div>
+               <div className="w-[250px] flex-shrink-0 flex justify-center">
+                 <img src={z3} alt="" />
+               </div>
+               <div className="w-[250px] flex-shrink-0 flex justify-center">
+                 <img src={z4} alt="" />
+               </div>
+               <div className="w-[250px] flex-shrink-0 flex justify-center">
+                 <img src={z5} alt="" />
+               </div>
+               <div className="w-[250px] flex-shrink-0 flex justify-center">
+                 <img src={z6} alt="" />
+               </div>
+               <div className="w-[250px] flex-shrink-0 flex justify-center">
+                 <img src={z7} alt="" />
+               </div>
+               <div className="w-[250px] flex-shrink-0 flex justify-center">
+                 <img src={z8} alt="" />
+               </div>
+            </div>
         </div>
         </>
     )
