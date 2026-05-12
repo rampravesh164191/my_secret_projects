@@ -61,7 +61,7 @@ const deleteUser = async (req, res) =>{
             res.status(404).json({message :  "user not found"})
         }else{
             await UserModel.findByIdAndDelete(userId);
-            res.status(300).json({message : "user deleted"})
+            res.status(200).json({message : "user deleted"})
         }
     }catch(error){
         res.status(500).json({message : "failed deleting user", error : error.message})
