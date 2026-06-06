@@ -1,19 +1,16 @@
 import { Request, Response } from "express";
 import Product from "./product.model";
 
-// Create product with image
+// Create product (Admin only)
 export const createProduct = async (req: Request, res: Response) => {
   try {
     const { name, description, price, category, stock } = req.body;
-    const image = req.file ? req.file.filename : null;
-
-    const product = await Product.create({ name, description, price, category, stock, image });
+    const product = await Product.create({ name, description, price, category, stock });
     res.status(201).json(product);
   } catch (error) {
     res.status(400).json({ error: "Failed to create product", details: error });
   }
 };
-
 
 // Get all products
 export const getProducts = async (req: Request, res: Response) => {
