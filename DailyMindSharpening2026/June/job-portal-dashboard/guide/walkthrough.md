@@ -655,3 +655,269 @@ export default function JobList() {
 
 
 👉 Once you confirm this works, we'll move to **Forms (Controlled vs Uncontrolled) + Event Handling** — the final building blocks of React fundamentals before we dive into hooks.
+
+---
+
+# 📚 Step 4 — Event Handling
+
+**Goal:**Capture user interactions (clicks, input changes, submissions).
+
+### Example
+
+```tsx
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+    </div>
+  );
+}
+```
+
+# 📚 Step 5 — Forms (Controlled vs Uncontrolled)
+
+## Controlled Components
+
+React manages the input value via state.
+
+```tsx
+import React, { useState } from "react";
+
+export default function ControlledForm() {
+  const [name, setName] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(`Hello, ${name}`);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Enter your name"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## Uncontrolled Components
+
+DOM manages the input value via ref.
+
+```tsx
+import { useRef } from "react";
+
+export default function UncontrolledForm() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(`Hello, ${inputRef.current?.value}`);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input ref={inputRef} placeholder="Enter your name" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+# 📚 Step 6 — Lifting State Up
+
+**Goal:** Share state between components by moving it to their common parent.
+
+## Example
+
+```tsx
+import React from "react";
+
+function NameInput({
+  onNameChange,
+}: {
+  onNameChange: (name: string) => void;
+}) {
+  return (
+    <input
+      onChange={(e) => onNameChange(e.target.value)}
+      placeholder="Enter your name"
+    />
+  );
+}
+
+function Greeting({
+  name,
+}: {
+  name: string;
+}) {
+  return <h2>Hello, {name || "Guest"}!</h2>;
+}
+
+export default function App() {
+  const [name, setName] = React.useState("");
+
+  return (
+    <div>
+      <NameInput onNameChange={setName} />
+      <Greeting name={name} />
+    </div>
+  );
+}
+```
+
+# 🎯 Mini Challenge
+
+## 1. Create a `ControlledForm` component
+
+- Create a `ControlledForm` component that takes user input and displays it.
+- Create an `UncontrolledForm` component using `ref`.
+- Demonstrate **lifting state up** by connecting two components (input + display).
+
+👉 Once you confirm these work, we'll mark **Phase 2 ✅** and move to **Phase 3: React Hooks** — where you'll learn `useState`, `useEffect`, `useRef`, `useMemo`, `useCallback`, custom hooks, and React hook patterns in depth.
+
+---
+
+# 🚀 Phase 3 — React Hooks
+
+**Goal:** Learn how to manage state, side effects, references, and performance optimizations using React's built-in hooks.
+
+## Why it matters
+
+- Hooks are the backbone of modern React.
+- Every production-grade app relies on them for state, lifecycle, and performance.
+- Interviewers often test your ability to explain **when to use each hook** and **when not to.**
+
+# 📚 Topics We'll Cover
+
+- `useState`
+- `useEffect`
+- `useRef`
+- `useMemo`
+- `useCallback`
+- `useReducer`
+- `useContext`
+- `Custom Hooks`
+
+## For each:
+
+- When to use ✅
+- When not to use ❌
+- Performance implications ⚡
+
+# 📝 Step 1 — `useState`
+
+**Goal:** Manage local component state.
+
+### Example: Counter
+
+```tsx
+import { useState } from "react";
+
+export default function UseStateCounter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+      <button onClick={() => setCount(count - 1)}>Decrease</button>
+    </div>
+  );
+}
+```
+
+### Best Practices
+
+- ✅ Use for **simple local state** (numbers, strings, booleans).
+- ❌ Don’t use for **complex state objects** → prefer useReducer.
+- ⚡ Avoid unnecessary re-renders by grouping related state logically.
+
+# 🎯 Mini Challenge
+1. Create a `Counter.tsx` component using `useState`.
+2. Add two buttons: **Increase** and **Decrease**.
+3. Render it in `App.tsx`.
+
+👉 Once you confirm this works, we'll move to **useEffect** — handling side effects such as API calls, timers, event listeners, and cleanup functions.
+
+---
+
+# 📚 Step 2 — useEffect
+
+**🎯 Goal:** Handle **side effects** in React:
+
+- Fetching data
+- Subscribing/unsubscribing (events, sockets)
+- Timers
+- Updating the DOM outside React
+
+### ✅ Basic Example
+
+```tsx
+import { useEffect, useState } from "react";
+
+export default function UseEffectTimer() {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds((prev) => prev + 1);
+    }, 1000);
+
+    // Cleanup when component unmounts
+    return () => clearInterval(interval);
+  }, []);
+
+  return <p>Timer: {seconds} seconds</p>;
+}
+```
+
+- `useEffect(() => { ... }, [])` → runs once after mount.
+- Cleanup function prevents memory leaks.
+
+### ✅ Data Fetch Example
+
+```tsx
+import { useEffect, useState } from "react";
+
+export default function UseEffectUsers() {
+  const [users, setUsers] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => res.json())
+      .then((data) => setUsers(data.map((u: any) => u.name)));
+  }, []);
+
+  return (
+    <ul>
+      {users.map((user, i) => (
+        <li key={i}>{user}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## ⚡ Best Practices
+
+- ✅ Always add dependencies in the array (`[count]`, `[userId]`).
+- ❌ Don't leave it empty unless you truly want "run once".
+- ⚡ Use cleanup for subscriptions, timers, or event listeners.
+
+## 🎯 Mini Challenge
+
+- Create a `Timer.tsx` component using `useEffect + setInterval`.
+- Create a `Users.tsx` component that fetches and displays user names.
+- Import both into `App.tsx` and confirm they work.
+
+👉 Once you confirm this works, we'll move to `useRef` — for DOM access and persisting values without re-renders.
