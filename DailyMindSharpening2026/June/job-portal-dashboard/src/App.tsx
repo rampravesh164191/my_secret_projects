@@ -1,29 +1,16 @@
-import WelcomeMessage from "@/components/WelcomeMessage";
-import Card from "@/components/Card";
-import JobList from "./components/JobList";
-import ControlledForm from "./components/ControlledForm";
-import UncontrolledForm from "./components/UncontrolledForm";
-import LiftingState from "./components/LiftingState";
-import UseEffectTimer from "./components/UseEffectTimer";
-import UseEffectUsers from "./components/UseEffectUsers";
+import AuthContextReducer from "./components/AuthContextReducer";
+import Button2 from "./components/Button2";
+import CompoundComponents from "./components/CompoundComponents";
+import EventsInput from "./components/EventsInput";
 
-function App() {
+
+export default function App(){
   return (
     <div>
-      <WelcomeMessage isLoggedIn={true} name="Ram" />
-      <WelcomeMessage isLoggedIn={false} name="Ram" />
-      <Card>
-        <h2>Job Portal Dashboard</h2>
-        <p>Welcome to your admin panel.</p>
-        <ControlledForm/>
-        <UncontrolledForm/>
-        <LiftingState/>
-        <UseEffectTimer/>
-        <UseEffectUsers/>
-      </Card>
-      <JobList/>
+      <CompoundComponents/>
+      <AuthContextReducer/>
+      <Button2>Click</Button2>
+      <EventsInput/>
     </div>
-  );
+  )
 }
-
-export default App;

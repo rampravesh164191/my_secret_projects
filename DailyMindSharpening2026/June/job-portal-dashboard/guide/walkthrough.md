@@ -921,3 +921,1243 @@ export default function UseEffectUsers() {
 - Import both into `App.tsx` and confirm they work.
 
 👉 Once you confirm this works, we'll move to `useRef` — for DOM access and persisting values without re-renders.
+
+---
+
+# 📚 Step 3 — useRef
+
+## 🎯 Goal
+
+- Persist values across renders without causing re-renders.
+- Directly access and manipulate DOM elements.
+- Store mutable values (like timers, previous state, etc.).
+
+## ✅ DOM Access Example
+
+```tsx
+import { useRef } from "react";
+
+export default function UseRefFocusInput() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleFocus = () => {
+    inputRef.current?.focus();
+  };
+
+  return (
+    <div>
+      <input ref={inputRef} placeholder="Type here..." />
+      <button onClick={handleFocus}>Focus Input</button>
+    </div>
+  );
+}
+```
+
+`inputRef.current` points to the actual DOM node.
+
+Clicking the button focuses the input.
+
+## ✅ Persisting Values Example
+
+```tsx
+import { useRef, useState } from "react";
+
+export default function UseRefRenderCounter() {
+  const [count, setCount] = useState(0);
+  const renders = useRef(0);
+
+  renders.current += 1;
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <p>Component rendered: {renders.current} times</p>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+    </div>
+  );
+}
+```
+
+`renders.current` updates without triggering re-renders.
+
+Useful for tracking values across renders.
+
+## ⚡ Best Practices
+
+✅ Use for DOM access, timers, or persisting values.
+
+❌ Don't use `useRef` as a replacement for state when you need UI updates.
+
+⚡ Great for performance optimizations (avoiding unnecessary re-renders).
+
+## 🎯 Mini Challenge
+
+- Create a `FocusInput.tsx` component that focuses an input when a button is clicked.
+- Create a `RenderCounter.tsx` component that tracks how many times it has rendered using `useRef`.
+- Import both into `App.tsx` and confirm they work.
+
+👉 Once you confirm this works, we'll move to `useMemo + useCallback` — the performance optimization hooks that prevent wasted re-renders.
+
+---
+
+# 📚 Step 4 — useMemo
+
+**🎯 Goal:** Memoize expensive calculations so they don't re-run unnecessarily.
+
+### Example
+
+```tsx
+import { useMemo, useState } from "react";
+
+export default function UseMemoExpensiveCalculation() {
+  const [count, setCount] = useState(0);
+  const [other, setOther] = useState(0);
+
+  const expensiveValue = useMemo(() => {
+    console.log("Calculating...");
+    return count * 1000;
+  }, [count]);
+
+  return (
+    <div>
+      <p>Expensive Value: {expensiveValue}</p>
+      <button onClick={() => setCount(count + 1)}>Increase Count</button>
+      <button onClick={() => setOther(other + 1)}>Increase Other</button>
+    </div>
+  );
+}
+```
+
+- Calculation only runs when `count` changes, not when `other` changes.
+- Useful for filtering, sorting, or heavy computations.
+
+# 📚 Step 5 — useCallback
+
+**🎯 Goal:** Memoize functions so they don't get recreated on every render.
+
+### Example
+
+```tsx
+import { useCallback, useState } from "react";
+
+type ButtonProps = {
+  onClick: () => void;
+  children: React.ReactNode;
+};
+
+function ChildButton({ onClick, children }: ButtonProps) {
+  console.log("Child rendered");
+  return <button onClick={onClick}>{children}</button>;
+}
+
+export default function UseCallbackParent() {
+  const [count, setCount] = useState(0);
+
+  const handleClick = useCallback(() => {
+    setCount((prev) => prev + 1);
+  }, []);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <ChildButton onClick={handleClick}>Increase</ChildButton>
+    </div>
+  );
+}
+```
+
+- Without `useCallback`, `handleClick` would be recreated every render → child re-renders unnecessarily.
+- With `useCallback`, the function reference stays stable.
+
+## ⚡ Best Practices
+
+- ✅ Use `useMemo` for expensive calculations.
+- ✅ Use `useCallback` when passing functions to child components.
+- ❌ Don't overuse — they add complexity if the computation is cheap.
+- ⚡ Combine with `React.memo` for maximum optimization.
+
+## 🎯 Mini Challenge
+
+- Create an `ExpensiveCalculation.tsx` component using `useMemo`.
+- Create a `Parent.tsx` + `ChildButton.tsx` setup using `useCallback`.
+- Observe console logs to see when recalculations or re-renders happen.
+
+👉 Once you confirm this works, we'll move to `useReducer + useContext` — the hooks that prepare you for global state management (Redux, Zustand, etc.).
+
+---
+
+# 📚 Step 6 — useReducer
+
+**🎯 Goal:** Manage complex state logic (multiple values, branching updates) in a predictable way.
+
+### Example: Counter with Reducer
+
+```tsx
+import { useReducer } from "react";
+
+type Action = { type: "increment" } | { type: "decrement" };
+
+function reducer(state: number, action: Action): number {
+  switch (action.type) {
+    case "increment":
+      return state + 1;
+    case "decrement":
+      return state - 1;
+    default:
+      return state;
+  }
+}
+
+export default function UseReducerCounter() {
+  const [count, dispatch] = useReducer(reducer, 0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => dispatch({ type: "increment" })}>+</button>
+      <button onClick={() => dispatch({ type: "decrement" })}>-</button>
+    </div>
+  );
+}
+```
+
+- `useReducer` is like `useState` but with a reducer function.
+- Great for complex state transitions.
+
+# 📚 Step 7 — useContext
+
+**🎯 Goal:** Avoid prop drilling by sharing state globally across components.
+
+### Example: Theme Context
+
+```tsx
+import { createContext, useContext } from "react";
+
+const ThemeContext = createContext("light");
+
+function ThemeButton() {
+  const theme = useContext(ThemeContext);
+  return <button>{theme === "light" ? "🌞 Light Mode" : "🌙 Dark Mode"}</button>;
+}
+
+export default function UseContextTheme() {
+  return (
+    <ThemeContext.Provider value="dark">
+      <ThemeButton />
+    </ThemeContext.Provider>
+  );
+}
+```
+
+- `useContext` lets you consume values from a provider without passing props down manually.
+- Perfect for themes, auth, or global settings.
+
+## ⚡ Best Practices
+
+- ✅ Use `useReducer` for complex state logic.
+- ✅ Use `useContext` for global state (theme, auth, language).
+- ❌ Don't overuse context for everything — it can cause unnecessary re-renders.
+- ⚡ Combine `useReducer` + `useContext` for a mini Redux-like pattern.
+
+## 🎯 Mini Challenge
+
+- Create a `ReducerCounter.tsx` using `useReducer`.
+- Create a `ThemeContext.tsx` with a `ThemeButton` that switches between light/dark.
+- Import both into `App.tsx` and confirm they work.
+
+👉 Once you confirm this works, we'll wrap up Phase 3 ✅ and move to Phase 4: Advanced React Patterns — covering custom hooks, higher-order components, render props, and context-based state management.
+
+---
+
+# 🚀 Phase 4 — Advanced React Patterns
+
+**Goal:** Learn how to structure and scale React apps with reusable patterns.
+
+### 📚 Topics We'll Cover
+
+- **Custom Hooks** → encapsulate reusable logic.
+- **React.memo** → prevent unnecessary re-renders.
+- **Higher-Order Components (HOCs)** → wrap components with extra functionality.
+- **Render Props** → pass functions as props for flexible rendering.
+- **Context + Reducer combo** → mini state management system.
+- **Compound Components** → build flexible UI libraries (like `<Tabs>` with `<Tab>` children).
+
+### 📝 Step 1 — Custom Hooks
+
+**Goal:** Extract reusable logic into a hook.
+
+### Example: useLocalStorage
+
+```tsx
+import { useEffect, useState } from "react";
+
+function useLocalStorage(key: string, initialValue: string) {
+  const [value, setValue] = useState(() => {
+    return localStorage.getItem(key) || initialValue;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(key, value);
+  }, [key, value]);
+
+  return [value, setValue] as const;
+}
+
+export default function CustomHooks() {
+  const [name, setName] = useLocalStorage("name", "Ram");
+
+  return (
+    <div>
+      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <p>Hello, {name}!</p>
+    </div>
+  );
+}
+```
+
+- Encapsulates logic for syncing state with `localStorage`.
+- Reusable across multiple components.
+
+## 🎯 Mini Challenge
+
+- Create a `useLocalStorage` custom hook.
+- Use it in a component to persist a user's name across refreshes.
+- Confirm that typing a new name and refreshing the page keeps the value.
+
+👉 Once you confirm this works, we'll move to `React.memo + HOCs + Render Props` — the patterns that make your components highly reusable and optimized.
+
+---
+
+# 📚 Step 2 — React.memo
+
+**🎯 Goal:** Prevent unnecessary re-renders of child components when props haven't changed.
+
+### Example
+
+```tsx
+import React, { useState } from "react";
+
+const Child = React.memo(({ value }: { value: number }) => {
+  console.log("Child rendered");
+  return <p>Value: {value}</p>;
+});
+
+export default function ReactMemoParent() {
+  const [count, setCount] = useState(0);
+  const [other, setOther] = useState(0);
+
+  return (
+    <div>
+      <Child value={count} />
+      <button onClick={() => setCount(count + 1)}>Increase Count</button>
+      <button onClick={() => setOther(other + 1)}>Increase Other</button>
+    </div>
+  );
+}
+```
+
+- Without `React.memo`, `Child` re-renders every time `Parent` changes.
+- With `React.memo`, `Child` only re-renders when its `value` prop changes.
+
+## 📚 Step 3 — Higher-Order Components (HOCs)
+
+**🎯 Goal:** Wrap components to add extra functionality.
+
+### Example
+
+```tsx
+import React from "react";
+
+function withLogger<T extends object>(Component: React.ComponentType<T>) {
+  return (props: T) => {
+    console.log("Props:", props);
+    return <Component {...props} />;
+  };
+}
+
+function Hello({ name }: { name: string }) {
+  return <h1>Hello, {name}</h1>;
+}
+
+const HelloWithLogger = withLogger(Hello);
+
+export default function HOCs() {
+  return <HelloWithLogger name="Ram" />;
+}
+```
+
+- `withLogger` adds logging to any component.
+- HOCs are useful for cross-cutting concerns (auth, logging, analytics).
+
+## 📚 Step 4 — Render Props
+
+**🎯 Goal:** Pass a function as a prop to control rendering.
+
+### Example
+
+```tsx
+import React from "react";
+
+type CounterProps = {
+  children: (count: number, increase: () => void) => React.ReactNode;
+};
+
+function Counter({ children }: CounterProps) {
+  const [count, setCount] = React.useState(0);
+  const increase = () => setCount(count + 1);
+  return <>{children(count, increase)}</>;
+}
+
+export default function RenderProps() {
+  return (
+    <Counter>
+      {(count, increase) => (
+        <div>
+          <p>Count: {count}</p>
+          <button onClick={increase}>Increase</button>
+        </div>
+      )}
+    </Counter>
+  );
+}
+```
+
+- Flexible pattern for reusable logic.
+- Often replaced by custom hooks today, but still valuable to know.
+
+## 🎯 Mini Challenge
+
+- Create a `Parent.tsx` + `Child.tsx` setup using `React.memo`.
+- Create a `withLogger` HOC that logs props.
+- Create a `Counter` component using **render props**.
+
+👉 Once you confirm these work, we'll move to **Compound Components + Context + Reducer combo** — the patterns used in professional UI libraries (like building your own `<Tabs>` or `<Modal>` system).
+
+---
+
+# 📚 Step 5 — Compound Components
+
+**🎯 Goal:** Allow multiple components to work together under a single parent, giving developers flexibility.
+
+### Example: Tabs System
+
+```tsx
+import React from "react";
+
+const TabsContext = React.createContext<{ active: string; setActive: (id: string) => void } | null>(null);
+
+function Tabs({ children }: { children: React.ReactNode }) {
+  const [active, setActive] = React.useState("tab1");
+  return (
+    <TabsContext.Provider value={{ active, setActive }}>
+      <div>{children}</div>
+    </TabsContext.Provider>
+  );
+}
+
+function TabList({ children }: { children: React.ReactNode }) {
+  return <div style={{ display: "flex", gap: "1rem" }}>{children}</div>;
+}
+
+function Tab({ id, children }: { id: string; children: React.ReactNode }) {
+  const ctx = React.useContext(TabsContext)!;
+  return (
+    <button
+      style={{ fontWeight: ctx.active === id ? "bold" : "normal" }}
+      onClick={() => ctx.setActive(id)}
+    >
+      {children}
+    </button>
+  );
+}
+
+function TabPanel({ id, children }: { id: string; children: React.ReactNode }) {
+  const ctx = React.useContext(TabsContext)!;
+  return ctx.active === id ? <div>{children}</div> : null;
+}
+
+export default function CompoundComponents() {
+  return (
+    <Tabs>
+      <TabList>
+        <Tab id="tab1">Home</Tab>
+        <Tab id="tab2">Profile</Tab>
+      </TabList>
+      <TabPanel id="tab1">🏠 Welcome Home</TabPanel>
+      <TabPanel id="tab2">👤 User Profile</TabPanel>
+    </Tabs>
+  );
+}
+```
+
+- `Tabs` manages state.
+- `TabList`, `Tab`, and `TabPanel` consume context.
+- Flexible, reusable, and scalable.
+
+# 📚 Step 6 — Context + Reducer Combo
+
+**🎯 Goal:** Build a mini state management system (like Redux) inside React.
+
+### Example: Auth Context
+
+```tsx
+import React from "react";
+
+type State = { user: string | null };
+type Action = { type: "login"; user: string } | { type: "logout" };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case "login":
+      return { user: action.user };
+    case "logout":
+      return { user: null };
+    default:
+      return state;
+  }
+}
+
+const AuthContext = React.createContext<{ state: State; dispatch: React.Dispatch<Action> } | null>(null);
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [state, dispatch] = React.useReducer(reducer, { user: null });
+  return <AuthContext.Provider value={{ state, dispatch }}>{children}</AuthContext.Provider>;
+}
+
+export function useAuth() {
+  return React.useContext(AuthContext)!;
+}
+
+// Usage
+function LoginButton() {
+  const { dispatch } = useAuth();
+  return <button onClick={() => dispatch({ type: "login", user: "Ram" })}>Login</button>;
+}
+
+function LogoutButton() {
+  const { dispatch } = useAuth();
+  return <button onClick={() => dispatch({ type: "logout" })}>Logout</button>;
+}
+
+function UserInfo() {
+  const { state } = useAuth();
+  return <p>{state.user ? `Logged in as ${state.user}` : "Not logged in"}</p>;
+}
+
+export default function AuthContextReducer() {
+  return (
+    <AuthProvider>
+      <UserInfo />
+      <LoginButton />
+      <LogoutButton />
+    </AuthProvider>
+  );
+}
+```
+
+## 🎯 Mini Challenge
+
+- Build a `Tabs` compound component with `TabList`, `Tab`, and `TabPanel`.
+- Build an `AuthProvider` using `useReducer + useContext`.
+- Test logging in/out and switching tabs.
+
+👉 Once you confirm this works, we'll mark **Phase 4 ✅** and move to **Phase 5: TypeScript + React Integration** — where you'll learn typing props, hooks, contexts, and building strongly typed reusable components.
+
+---
+
+# 🚀 Phase 5 — TypeScript + React Integration
+
+**Goal:** Make your React code strongly typed, safe, and self-documenting. This is where you combine your MERN + TS skills to write production-grade components.
+
+### 📚 Topics We'll Cover
+
+- Typing **props** (required, optional, default values).
+- Typing **children** (`React.ReactNode`).
+- Typing **events** (`React.ChangeEvent<HTMLInputElement>`).
+- Typing **hooks** (`useState`, `useReducer`, `useContext`).
+- Typing **custom hooks.**
+- Typing **HOCs** and **Render Props**.
+- Typing **API responses** with generics.
+
+## 📝 Step 1 — Typing Props
+
+### Example
+
+```tsx
+type ButtonProps = {
+  onClick: () => void;
+  children: React.ReactNode;
+  disabled?: boolean; // optional
+};
+
+export default function Button({
+  onClick,
+  children,
+  disabled = false,
+}: ButtonProps) {
+  return (
+    <button onClick={onClick} disabled={disabled}>
+      {children}
+    </button>
+  );
+}
+```
+
+- `disabled?` → optional prop.
+- Default value handled in destructuring.
+- `children` typed as `React.ReactNode`.
+
+## 📝 Step 2 — Typing Events
+
+### Example
+
+```tsx
+type InputProps = {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export default function Input({ onChange }: InputProps) {
+  return <input onChange={onChange} />;
+}
+```
+
+- Strong typing ensures you get autocomplete and error checking.
+
+## 📝 Step 3 — Typing Hooks
+
+### useState with type:
+
+```tsx
+const [count, setCount] = React.useState<number>(0);
+```
+
+### useReducer with type:
+
+```tsx
+type State = { count: number };
+type Action = { type: "increment" } | { type: "decrement" };
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case "increment":
+      return { count: state.count + 1 };
+    case "decrement":
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+}
+
+const [state, dispatch] = React.useReducer(reducer, { count: 0 });
+```
+
+## 🎯 Mini Challenge
+
+- Refactor your `Button` component with a typed `ButtonProps`.
+- Create an `Input` component with a typed `onChange` event.
+- Refactor your `ReducerCounter` with typed `State` and `Action`.
+
+👉 Once you confirm this works, we'll move to **Phase 6: State Management (Redux, Zustand, Context patterns)** — where you'll learn how to manage global state in a scalable way for your CRM and SaaS dashboard projects.
+
+---
+
+# 🚀 Phase 6 — State Management
+
+**Goal:** Learn how to manage global state in scalable apps. This is critical for your CRM and SaaS dashboard projects.
+
+## 📚 Options We'll Cover
+
+- **Context + Reducer** (already practiced) → good for small apps.
+- **Redux Toolkit** → industry standard for large apps.
+- **Zustand** → lightweight, modern alternative.
+- **React Query (TanStack Query)** → for server state (API data).
+
+## 📝 Step 1 — Redux Toolkit Basics
+
+### Setup
+
+```bash
+npm install @reduxjs/toolkit react-redux
+```
+
+### Store
+
+```tsx
+import { configureStore, createSlice } from "@reduxjs/toolkit";
+
+const counterSlice = createSlice({
+  name: "counter",
+  initialState: { value: 0 },
+  reducers: {
+    increment: (state) => {
+      state.value += 1;
+    },
+    decrement: (state) => {
+      state.value -= 1;
+    },
+  },
+});
+
+export const { increment, decrement } = counterSlice.actions;
+
+export const store = configureStore({
+  reducer: { counter: counterSlice.reducer },
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+```
+
+### Provider
+
+```tsx
+import { Provider } from "react-redux";
+import { store } from "./store";
+import Counter from "./Counter";
+
+export default function App() {
+  return (
+    <Provider store={store}>
+      <Counter />
+    </Provider>
+  );
+}
+```
+
+### Component
+
+```tsx
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, increment, decrement } from "./store";
+
+export default function Counter() {
+  const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => dispatch(increment())}>+</button>
+      <button onClick={() => dispatch(decrement())}>-</button>
+    </div>
+  );
+}
+```
+
+## ⚡ Best Practices
+
+- ✅ Use Redux Toolkit for **predictable global state**.
+- ✅ Use Zustand for **lightweight stores.**
+- ✅ Use React Query for **server state** (API calls, caching).
+- ❌ Don't mix too many state libraries — pick based on project needs.
+
+## 🎯 Mini Challenge
+
+- Install Redux Toolkit.
+- Create a `counterSlice` with `increment` and `decrement`.
+- Connect it to your app with `Provider`.
+- Build a `Counter` component that uses Redux state.
+
+👉 Once you confirm this works, we'll move to **Phase 7: Routing (React Router v6)** — where you'll learn navigation, protected routes, and layout management for your CRM and SaaS dashboard.
+
+---
+
+# 🚀 Phase 7 — Routing (React Router v6)
+
+**Goal:** Add navigation, layouts, and protected routes to your CRM/dashboard app.
+
+## 📚 Topics We'll Cover
+
+- Basic routing (`BrowserRouter`, `Routes`, `Route`)
+- Nested routes (layouts)
+- Dynamic routes (`:id`)
+- Navigation (`Link`, `useNavigate`)
+- Protected routes (auth guard)
+
+## 📝 Step 1 — Basic Routing
+
+### Setup
+
+```bash
+npm install react-router-dom
+```
+
+### Example
+
+```tsx
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
+function Home() {
+  return <h2>Home Page</h2>;
+}
+
+function About() {
+  return <h2>About Page</h2>;
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <nav>
+        <Link to="/">Home</Link> | <Link to="/about">About</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+```
+
+## 📝 Step 2 — Nested Routes (Layouts)
+
+### Example
+
+```tsx
+function Layout() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <nav>
+        <Link to="profile">Profile</Link> | <Link to="settings">Settings</Link>
+      </nav>
+      <Outlet />
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="profile" element={<h2>Profile Page</h2>} />
+          <Route path="settings" element={<h2>Settings Page</h2>} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
+```
+
+## 📝 Step 3 — Protected Routes
+
+### Example
+
+```tsx
+function ProtectedRoute({ children }: { children: JSX.Element }) {
+  const isAuthenticated = false; // replace with real auth
+  return isAuthenticated ? children : <h2>Access Denied</h2>;
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <h2>Dashboard</h2>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+```
+
+## 🎯 Mini Challenge
+
+- Install `react-router-dom`.
+- Create routes for `Home`, `About`, and `Dashboard`.
+- Add a `Layout` with nested routes (`Profile`, `Settings`).
+- Implement a `ProtectedRoute` that blocks access if not authenticated.
+
+👉 Once you confirm this works, we'll move to **Phase 8: API Integration (REST + GraphQL)** — where you'll connect your frontend to your backend CRM APIs with proper error handling, loading states, and TypeScript typing.
+
+---
+
+# 🚀 Phase 8 — API Integration (REST + GraphQL)
+
+**Goal:** Connect your frontend to backend APIs with proper error handling, loading states, and TypeScript typing.
+
+## 📚 Topics We’ll Cover
+
+- Fetching data with fetch and axios.
+- Handling loading, error, and success states.
+- Typing API responses with TypeScript.
+- Using **React Query (TanStack Query)** for caching and server state.
+- GraphQL basics with Apollo Client.
+
+## 📝 Step 1 — REST API with Fetch
+
+### Example
+
+```tsx
+import React from "react";
+
+type User = {
+  id: number;
+  name: string;
+};
+
+export default function Users() {
+  const [users, setUsers] = React.useState<User[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
+      .then((data) => setUsers(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <ul>
+      {users.map((u) => (
+        <li key={u.id}>{u.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## 📝 Step 2 — React Query (TanStack Query)
+
+### Setup
+
+```bash
+npm install @tanstack/react-query
+```
+
+### Example
+
+```tsx
+import { useQuery } from "@tanstack/react-query";
+
+async function fetchUsers() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+  return res.json();
+}
+
+export default function Users() {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["users"],
+    queryFn: fetchUsers,
+  });
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error loading users</p>;
+
+  return (
+    <ul>
+      {data.map((u: any) => (
+        <li key={u.id}>{u.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+- Handles caching, retries, and background refetching automatically.
+- Perfect for dashboards with live data.
+
+## 📝 Step 3 — GraphQL with Apollo Client
+
+### Setup
+
+```bash
+npm install @apollo/client graphql
+```
+
+### Example
+
+```tsx
+import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "https://countries.trevorblades.com/",
+  cache: new InMemoryCache(),
+});
+
+const GET_COUNTRIES = gql`
+  query {
+    countries {
+      code
+      name
+    }
+  }
+`;
+
+function Countries() {
+  const { loading, error, data } = useQuery(GET_COUNTRIES);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error!</p>;
+
+  return (
+    <ul>
+      {data.countries.map((c: any) => (
+        <li key={c.code}>{c.name}</li>
+      ))}
+    </ul>
+  );
+}
+
+export default function App() {
+  return (
+    <ApolloProvider client={client}>
+      <Countries />
+    </ApolloProvider>
+  );
+}
+```
+
+## 🎯 Mini Challenge
+
+- Create a `Users.tsx` component using **fetch** with error + loading states.
+- Create a `Users.tsx` component using **React Query**.
+- Create a `Countries.tsx` component using **Apollo Client** with GraphQL.
+
+👉 Once you confirm this works, we’ll move to **Phase 9: UI/UX Enhancements (Styling, Component Libraries, Responsive Design)** — where you’ll polish your app with Tailwind, Material UI, or Chakra, and make it production-ready.
+
+---
+
+# 🚀 Phase 9 — UI/UX Enhancements
+
+**Goal:** Polish your app with styling, component libraries, and responsive design so it looks professional and production-ready.
+
+## 📚 Topics We’ll Cover
+
+### Styling Approaches
+
+- CSS Modules
+- Styled Components
+- Tailwind CSS
+
+### Component Libraries
+
+- Material UI (MUI)
+- Chakra UI
+- Ant Design
+
+### Responsive Design
+
+- Flexbox & Grid
+- Media queries
+- Utility classes in Tailwind
+
+## 📝 Step 1 — Tailwind CSS Setup
+
+### Install
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+### Configure `tailwind.config.js`
+
+```js
+module.exports = {
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  theme: { extend: {} },
+  plugins: [],
+};
+```
+
+### Add to `index.css`
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+### Usage
+
+```tsx
+export default function Card() {
+  return (
+    <div className="p-4 border rounded shadow hover:shadow-lg transition">
+      <h2 className="text-xl font-bold">Dashboard Card</h2>
+      <p className="text-gray-600">This is styled with Tailwind.</p>
+    </div>
+  );
+}
+```
+
+## 📝 Step 2 — Material UI Example
+
+### Install
+
+```bash
+npm install @mui/material @emotion/react @emotion/styled
+```
+
+### Usage
+
+```tsx
+import Button from "@mui/material/Button";
+
+export default function App() {
+  return (
+    <Button variant="contained" color="primary">
+      MUI Button
+    </Button>
+  );
+}
+```
+
+## 📝 Step 3 — Responsive Design
+
+### Example with Tailwind
+
+```tsx
+export default function ResponsiveLayout() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="bg-blue-200 p-4">Column 1</div>
+      <div className="bg-green-200 p-4">Column 2</div>
+      <div className="bg-red-200 p-4">Column 3</div>
+    </div>
+  );
+}
+```
+
+- On mobile → 1 column.
+- On medium screens → 3 columns.
+
+## 🎯 Mini Challenge
+
+- Set up **Tailwind CSS** and style a `Card` component.
+- Add a **Material UI Button** to your app.
+- Create a **ResponsiveLayout** with Tailwind grid that adapts to screen size.
+
+👉 Once you confirm this works, we’ll move to **Phase 10: Testing (Unit, Integration, E2E)** — where you’ll learn Jest, React Testing Library, and Cypress to ensure your app is reliable and bug-free.
+
+---
+
+# 🚀 Phase 9 — UI/UX Enhancements
+
+**Goal:** Polish your app with styling, component libraries, and responsive design so it looks professional and production-ready.
+
+## 📚 Topics We’ll Cover
+
+### Styling Approaches
+
+- CSS Modules
+- Styled Components
+- Tailwind CSS
+
+### Component Libraries
+
+- Material UI (MUI)
+- Chakra UI
+- Ant Design
+
+### Responsive Design
+
+- Flexbox & Grid
+- Media queries
+- Utility classes in Tailwind
+
+## 📝 Step 1 — Tailwind CSS Setup
+
+### Install
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p  -----ignore it, just create file manually(tailwind.config.js)
+```
+
+### Configure `tailwind.config.js`
+
+```js
+module.exports = {
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  theme: { extend: {} },
+  plugins: [],
+};
+```
+
+### Add to `index.css`
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+## Usage
+
+```tsx
+export default function Card() {
+  return (
+    <div className="p-4 border rounded shadow hover:shadow-lg transition">
+      <h2 className="text-xl font-bold">Dashboard Card</h2>
+      <p className="text-gray-600">This is styled with Tailwind.</p>
+    </div>
+  );
+}
+```
+
+## 📝 Step 2 — Material UI Example
+
+### Install
+
+```bash
+npm install @mui/material @emotion/react @emotion/styled
+```
+
+### Usage
+
+```tsx
+import Button from "@mui/material/Button";
+
+export default function App() {
+  return (
+    <Button variant="contained" color="primary">
+      MUI Button
+    </Button>
+  );
+}
+```
+
+## 📝 Step 3 — Responsive Design
+
+### Example with Tailwind
+
+```tsx
+export default function ResponsiveLayout() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="bg-blue-200 p-4">Column 1</div>
+      <div className="bg-green-200 p-4">Column 2</div>
+      <div className="bg-red-200 p-4">Column 3</div>
+    </div>
+  );
+}
+```
+
+- On mobile → 1 column.
+- On medium screens → 3 columns.
+
+## 🎯 Mini Challenge
+
+- Set up Tailwind CSS and style a `Card` component.
+- Add a Material UI `Button` to your app.
+- Create a `ResponsiveLayout` with Tailwind grid that adapts to screen size.
+
+👉 Once you confirm this works, we’ll move to **Phase 10: Testing (Unit, Integration, E2E)** — where you’ll learn Jest, React Testing Library, and Cypress to ensure your app is reliable and bug-free.
